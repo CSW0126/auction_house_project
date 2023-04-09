@@ -5,7 +5,7 @@ export const Ship = {
     startPrice: 100,
     price: 200,
     endDate:"2023-04-15T00:00:00.000Z",
-    path:'auction_house_project/pirate_ship_in_bottle.glb',
+    path:'/pirate_ship_in_bottle.glb',
     rotation: [0, 1, 0],
     position: [0, 0, 0],
     scale:[1,1,1],
