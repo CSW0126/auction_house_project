@@ -46,7 +46,7 @@ const AnimatedRoute = () => {
                     </RequireAuth> 
                 } />
 
-                <Route path="*" element={<Navigate to="/" />} />
+                {/* <Route path="*" element={<Navigate to="/" />} /> */}
             </Routes>
             <Canvas key={'ship_canvas'}/>
         </AnimatePresence>
