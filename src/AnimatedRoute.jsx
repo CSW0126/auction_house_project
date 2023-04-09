@@ -20,33 +20,33 @@ const AnimatedRoute = () => {
     return (
         <AnimatePresence>
             <Routes location={location} key={location.pathname}>
-                <Route path="/" element={<Home />} />
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/signup" element={<SignUp />} />
+                <Route path="/auction_house_project/" element={<Home />} />
+                <Route path="/auction_house_project/signin" element={<SignIn />} />
+                <Route path="/auction_house_project/signup" element={<SignUp />} />
 
 
-                <Route path="/auction" element={
+                <Route path="/auction_house_project/auction" element={
                     <Auction/>
                 } />
 
-                <Route path="/otherGift" element={
+                <Route path="/auction_house_project/otherGift" element={
                     <OtherGift/>
                 } />
 
-                <Route path="/bidedItem" element={
-                    <RequireAuth loginPath='/signin'>
+                <Route path="/auction_house_project/bidedItem" element={
+                    <RequireAuth loginPath='/auction_house_project/signin'>
                         <BidedItem/>
                     </RequireAuth>
 
                 } />
 
-                <Route path="/profile" element={
-                    <RequireAuth loginPath='/signin'>
+                <Route path="/auction_house_project/profile" element={
+                    <RequireAuth loginPath='/auction_house_project/signin'>
                         <Profile/>
                     </RequireAuth> 
                 } />
 
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<Navigate to="/auction_house_project/" />} />
             </Routes>
             <Canvas key={'ship_canvas'}/>
         </AnimatePresence>
