@@ -85,7 +85,7 @@ const BidedItem = () => {
     const [generatingImg, setGeneratingImg] = useState(false);
     const [deliveryMsg, setDeliveryMsg] = useState(snap.fakeUser.address)
     const [cusMsg , setCusMsg] = useState("");
-    const [aiMsg , setAiMsg] = useState("");
+    const [aiMsg , setAiMsg] = useState("Create a gradient pattern that goes from blue to red");
     const { enqueueSnackbar } = useSnackbar();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
