@@ -21,3 +21,4 @@ export const reader = (file) =>
     fileReader.readAsDataURL(file);
   });
 
+

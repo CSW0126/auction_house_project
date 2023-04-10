@@ -18,6 +18,9 @@ import { reader } from '../config/helper';
 
 import {RxExclamationTriangle} from 'react-icons/rx'
 import FilePicker from '../components/FilePicker';
+import AIPicker from '../components/AIPicker';
+
+import { Configuration, OpenAIApi } from 'openai';
 
 const style = {
     position: 'absolute',
@@ -79,8 +82,10 @@ const BidedItem = () => {
     const snap = useSnapshot(state);
     const [file, setFile] = useState('');
     const [activeEditorTab, setActiveEditorTab] = useState("");
+    const [generatingImg, setGeneratingImg] = useState(false);
     const [deliveryMsg, setDeliveryMsg] = useState(snap.fakeUser.address)
     const [cusMsg , setCusMsg] = useState("");
+    const [aiMsg , setAiMsg] = useState("");
     const { enqueueSnackbar } = useSnackbar();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -110,7 +115,7 @@ const BidedItem = () => {
     }, [activeEditorTab])
 
     useEffect(() => {
-        console.log(snap.ColorPickerOn)
+        console.log(snap.logoDecal)
     }, [snap])
 
     useEffect(() => {
@@ -139,15 +144,58 @@ const BidedItem = () => {
         navigate('/auction_house_project/profile');
     }
 
+    const callOpenAI = async (type, prompt) => {
+        try{
+            setGeneratingImg(true);
+            const config = new Configuration({
+                apiKey: import.meta.env.VITE_OpenAI_KEY,
+            })
+            delete config.baseOptions.headers['User-Agent'];
+            const openai = new OpenAIApi(config);
+
+            const response = await openai.createImage({
+                prompt,
+                n:1,
+                size: '1024x1024',
+                response_format:'b64_json'
+            })
+            // console.log(response.data.data[0].b64_json)
+            const img = response.data.data[0].b64_json
+            // console.log(img)
+            handleDecals(type, `data:image/png;base64,${img}`)
+            
+
+        }catch(err){
+            console.log(err)
+        }finally{
+            setGeneratingImg(false);
+            setActiveEditorTab("");
+        }
+    }
+
     const handleSubmit = (item) => {
         if (item === "Delivery") {
             state.deliveryState = true;  
             enqueueSnackbar("Delivery Address set. " , { variant: 'success' });
+            setActiveEditorTab("");
         }else if (item === "Customize") {
             state.cusState = true;
             enqueueSnackbar("Message received. We will call your for more customization details." , { variant: 'confirm' });
+            setActiveEditorTab("");
         }
-        setActiveEditorTab("");
+
+        if(item == 'logo'){
+            if(!aiMsg) enqueueSnackbar("Please enter your AI Prompt" , { variant: 'error' });
+            console.log("AI logo")
+            callOpenAI(item, aiMsg)
+
+
+        }else if (item == 'full'){
+            if(!aiMsg) enqueueSnackbar("Please enter your AI Prompt" , { variant: 'error' });
+            console.log("AI full")
+            callOpenAI(item, aiMsg)
+
+        }
 
     }
 
@@ -200,7 +248,12 @@ const BidedItem = () => {
                     return <ColorPicker />
 
                 case "AI Helper":
-                    return null
+                    return <AIPicker
+                    prompt={aiMsg}
+                    setPrompt={setAiMsg}
+                    generatingImg={generatingImg}
+                    handleSubmit={handleSubmit}
+                    />
                 case "Upload Logo":
                     return <FilePicker 
                         file={file}

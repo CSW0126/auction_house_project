@@ -15,7 +15,7 @@ const MsgBox = ({ prompt, setPrompt, handleSubmit, name, msg }) => {
 
         <CustomButton 
             type="filled"
-            title="Save"
+            title={name == "AI Helper" ? "Ask" : "Save"}
             handleClick={() => handleSubmit(name)}
             customStyles="text-xs"
         />
