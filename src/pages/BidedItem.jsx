@@ -150,8 +150,8 @@ const BidedItem = () => {
             const config = new Configuration({
                 apiKey: import.meta.env.VITE_OpenAI_KEY,
             })
-            console.log("HI",import.meta.env.VITE_OpenAI_KEY,)
-            delete config.baseOptions.headers['User-Agent'];
+            // console.log("HI",import.meta.env.VITE_OpenAI_KEY)
+            // delete config.baseOptions.headers['User-Agent'];
             const openai = new OpenAIApi(config);
 
             const response = await openai.createImage({
