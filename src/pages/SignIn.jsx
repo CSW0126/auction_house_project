@@ -20,6 +20,16 @@ const SignIn = () => {
         navigate('/auction_house_project/home');
     }
 
+    const handleGoBidedItem = () => {
+        state.page = 'otherGift';
+        navigate('/auction_house_project/otherGift');
+    }
+
+    const handleGoAuction = () => {
+        state.page = 'auction';
+        navigate('/auction_house_project/auction');
+    }
+
     const handleSignUp = () => {
         state.page = 'signup';
         navigate('/auction_house_project/signup');
@@ -105,6 +115,18 @@ const SignIn = () => {
                     className="absolute z-10 top-5 right-5"
                     {...fadeAnimation}
                 >
+                    <CustomButton 
+                        type="filled"
+                        title="All Products"
+                        handleClick={() => handleGoBidedItem()}
+                        customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
+                    />
+                    <CustomButton 
+                        type="filled"
+                        title="Auction"
+                        handleClick={() => handleGoAuction()}
+                        customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
+                    />
                     <CustomButton 
                         type="filled"
                         title="Sign Up"

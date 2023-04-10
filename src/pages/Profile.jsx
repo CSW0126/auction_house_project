@@ -14,6 +14,11 @@ const Profile = () => {
     const { enqueueSnackbar } = useSnackbar();
     let navigate  = useNavigate();
 
+    const handleGoBidedItem = () => {
+        state.page = 'otherGift';
+        navigate('/auction_house_project/otherGift');
+    }
+
     const handleGoBack = () => {
         state.page = 'home';
         navigate('/auction_house_project/home');
@@ -61,6 +66,12 @@ const Profile = () => {
                     className="absolute z-10 top-5 right-5"
                     {...fadeAnimation}
                 >
+                        <CustomButton 
+                            type="filled"
+                            title="All Products"
+                            handleClick={() => handleGoBidedItem()}
+                            customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
+                        />
                     <button className="relative bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mr-2" onClick={()=>handleAcqItemClick()}>
                         <span className="inline-flex rounded-full bg-red-500 text-dark w-4 h-4 absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2"></span>
                         Acquired Item
