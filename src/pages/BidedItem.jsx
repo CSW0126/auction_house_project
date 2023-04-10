@@ -151,7 +151,7 @@ const BidedItem = () => {
                 apiKey: import.meta.env.VITE_OpenAI_KEY,
             })
             // console.log("HI",import.meta.env.VITE_OpenAI_KEY)
-            // delete config.baseOptions.headers['User-Agent'];
+            delete config.baseOptions.headers['User-Agent'];
             const openai = new OpenAIApi(config);
 
             const response = await openai.createImage({
