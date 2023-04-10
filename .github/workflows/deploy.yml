@@ -30,9 +30,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-      env:
-        VITE_OpenAI_KEY: true
-
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
         with:
