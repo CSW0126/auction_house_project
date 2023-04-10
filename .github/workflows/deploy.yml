@@ -4,12 +4,17 @@ on:
   push:
     branches:
       - main
+env:
+  VITE_OpenAI_KEY: true
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    
+
+    env:
+      VITE_OpenAI_KEY: true
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -24,6 +29,9 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      env:
+        VITE_OpenAI_KEY: true
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
