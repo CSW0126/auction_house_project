@@ -17,12 +17,12 @@ const SignIn = () => {
 
     const handleGoBack = () => {
         state.page = 'home';
-        navigate('/home');
+        navigate('/auction_house_project/home');
     }
 
     const handleSignUp = () => {
         state.page = 'signup';
-        navigate('/signup');
+        navigate('/auction_house_project/signup');
     }
 
     const formik = useFormik({
@@ -45,7 +45,7 @@ const SignIn = () => {
                 authState: { user: user},
             });
             state.page = 'auction';
-            navigate('/auction')
+            navigate('/auction_house_project/auction')
         
             // try {
             //     const url = process.env.REACT_APP_SERVER_HOST + '/user/signIn'

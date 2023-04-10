@@ -3,27 +3,27 @@ import React, {useState} from 'react'
 import axios, { AxiosError } from 'axios';
 import { useSignIn } from "react-auth-kit";
 import { useFormik } from "formik";
-import { useNavigate  } from "react-router-dom";
 import {signUpFormAnimation, fadeAnimation} from '../config/motion'
 import CustomButton from '../components/CustomButton'
 import state from '../store';
 import { useSnapshot } from 'valtio';
+import { useNavigate  } from "react-router-dom";
 
 const SignUp = () => {
     const snap = useSnapshot(state);
     const [error, setError] = useState('')
     const [showError, setShowError] = useState(false)
+    const navigate = useNavigate();
     const signIn = useSignIn();
-    let navigate  = useNavigate();
 
     const handleGoBack = () => {
         state.page = 'home';
-        navigate('/home');
+        navigate('/auction_house_project/home');
     }
 
     const handleSignIn = () => {
         state.page = 'signin';
-        navigate('/signin');
+        navigate('/auction_house_project/signin');
     }
 
     const validate = values => {
@@ -71,7 +71,7 @@ const SignUp = () => {
                 authState: { user: user},
             });
             state.page = 'auction';
-            navigate('/auction')
+            navigate('/auction_house_project/auction')
         
             // try {
             //     const url = process.env.REACT_APP_SERVER_HOST + '/user/signUp'

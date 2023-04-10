@@ -90,7 +90,7 @@ const Auction = () => {
 
     const handleGoBidedItem = () => {
         state.page = 'otherGift';
-        navigate('/otherGift');
+        navigate('/auction_house_project/otherGift');
     }
 
     const handleLogout = () => {
@@ -100,17 +100,17 @@ const Auction = () => {
 
     const handleSignIn = () => {
         state.page = 'signin';
-        navigate('/signin');
+        navigate('/auction_house_project/signin');
     }
 
     const handleGoBack = () => {
         state.page = 'home';
-        navigate('/home');
+        navigate('/auction_house_project/home');
     }
 
     const handleGoProfile = () => {
         state.page = 'profile';
-        navigate('/profile');
+        navigate('/auction_house_project/profile');
     }
 
     const handleConfirm = () => {
@@ -135,7 +135,7 @@ const Auction = () => {
 
     const handleAcqItemClick = () => {
         state.page = 'bidedItem';
-        navigate('/bidedItem');
+        navigate('/auction_house_project/bidedItem');
     }
 
 

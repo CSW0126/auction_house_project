@@ -16,17 +16,17 @@ const Profile = () => {
 
     const handleGoBack = () => {
         state.page = 'home';
-        navigate('/home');
+        navigate('/auction_house_project/home');
     }
 
     const handleGoAuction = () => {
         state.page = 'auction';
-        navigate('/auction');
+        navigate('/auction_house_project/auction');
     }
 
     const handleAcqItemClick = () => {
         state.page = 'bidedItem';
-        navigate('/bidedItem');
+        navigate('/auction_house_project/bidedItem');
     }
 
 

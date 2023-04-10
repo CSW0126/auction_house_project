@@ -64,19 +64,19 @@ const BidedItem = () => {
     const handleGoBack = () => {
         setActiveEditorTab("");
         state.page = 'home';
-        navigate('/home');
+        navigate('/auction_house_project/home');
     }
 
     const handleGoAuction = () => {
         setActiveEditorTab("");
         state.page = 'auction';
-        navigate('/auction');
+        navigate('/auction_house_project/auction');
     }
 
     const handleGoProfile = () => {
         setActiveEditorTab("");
         state.page = 'profile';
-        navigate('/profile');
+        navigate('/auction_house_project/profile');
     }
 
     const handleSubmit = (item) => {
