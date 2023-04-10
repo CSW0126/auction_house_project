@@ -13,8 +13,11 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import ColorPicker from '../components/ColorPicker';
+import { Shoe, TShirt } from '../config/constants';
+import { reader } from '../config/helper';
 
 import {RxExclamationTriangle} from 'react-icons/rx'
+import FilePicker from '../components/FilePicker';
 
 const style = {
     position: 'absolute',
@@ -26,8 +29,55 @@ const style = {
     bgcolor: 'transparent',
   };
 
+const ShoeTab = [{
+    name: "ColorPicker",
+    icon: 'swatch.png',
+    },
+    {
+    name: "Customize",
+    icon: 'file.png',
+    },
+    {
+    name: "Delivery",
+    icon: 'delivery.png',
+    },
+    ]
+
+const TShirtTab = [
+    {
+        name: "AI Helper",
+        icon: 'ai.png',
+    },
+
+    {
+        name: "Upload Logo",
+        icon: 'upload.png',
+    },
+    {
+        name: "Textures",
+        icon: 'texture.png',
+    },
+    {
+        name: "Logo",
+        icon: 'logo-tshirt.png',
+    },
+    {
+        name: "ColorPicker",
+        icon: 'swatch.png',
+    },
+    {
+    name: "Customize",
+    icon: 'file.png',
+    },
+    {
+    name: "Delivery",
+    icon: 'delivery.png',
+    },
+    ]
+
 const BidedItem = () => {
     const snap = useSnapshot(state);
+    const [file, setFile] = useState('');
     const [activeEditorTab, setActiveEditorTab] = useState("");
     const [deliveryMsg, setDeliveryMsg] = useState(snap.fakeUser.address)
     const [cusMsg , setCusMsg] = useState("");
@@ -36,6 +86,8 @@ const BidedItem = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [shipState, setShipState] = useState(false);
+    const [currentModel, setCurrentModel] = useState(Shoe);
+    const [EditorTabs, setEditorTabs] = useState(snap.myItemShow == "shoe" ? ShoeTab : TShirtTab);
 
     let navigate  = useNavigate();
 
@@ -48,7 +100,7 @@ const BidedItem = () => {
         if(shipState){
             enqueueSnackbar("No more editing is allowed after confirm shipments. " , { variant: 'error' });
         }
-        console.log("activeEditorTab", activeEditorTab)
+        // console.log("activeEditorTab", activeEditorTab)
         if(activeEditorTab == "ColorPicker"){
             state.ColorPickerOn = true
         }else{
@@ -60,6 +112,14 @@ const BidedItem = () => {
     useEffect(() => {
         console.log(snap.ColorPickerOn)
     }, [snap])
+
+    useEffect(() => {
+        if(snap.myItemShow == "shoe"){
+            setEditorTabs(ShoeTab);
+        }else{
+            setEditorTabs(TShirtTab);
+        }
+    }, [currentModel])
 
     const handleGoBack = () => {
         setActiveEditorTab("");
@@ -91,27 +151,28 @@ const BidedItem = () => {
 
     }
 
-    const EditorTabs = [
-        {
-            name: "ColorPicker",
-            icon: 'swatch.png',
-        },
-        {
-          name: "Customize",
-          icon: 'file.png',
-        },
-        {
-          name: "Delivery",
-          icon: 'delivery.png',
-        },
-      ];
-
     const handleConfirmShipments = () => {
         handleClose();
         setActiveEditorTab("");
         setShipState(true);
         enqueueSnackbar("Your shipment is confirmed. " , { variant: 'success' });
     }
+
+    const handleDecals = (type, result) => {
+        if (type == 'logo'){
+            state.logoDecal = result;
+        }else if(type == 'full'){
+            state.fullDecal = result;
+        }
+      }
+
+    const readFile = (type) => {
+        reader(file)
+          .then((result) => {
+            handleDecals(type, result);
+            setActiveEditorTab("");
+          })
+      }
 
       const generateTabContent = () => {
         if(!shipState){
@@ -138,6 +199,14 @@ const BidedItem = () => {
                 case "ColorPicker":
                     return <ColorPicker />
 
+                case "AI Helper":
+                    return null
+                case "Upload Logo":
+                    return <FilePicker 
+                        file={file}
+                        setFile={setFile}
+                        readFile={readFile}
+                    />
             default:
                 return null;
             }
@@ -154,8 +223,44 @@ const BidedItem = () => {
             setActiveEditorTab("")
         }
 
+        if (tabName == 'Logo'){
+            console.log(snap.isLogoTexture)
+            if (snap.isLogoTexture){
+                state.isLogoTexture = false;
+                enqueueSnackbar('Logo function is Off. ' , { variant: 'default' });
+            }else{
+                state.isLogoTexture = true;
+                enqueueSnackbar('Logo function is On' , { variant: 'info' });
+            }
+        }
+
+        if (tabName == 'Textures'){
+            console.log(snap.isLogoTexture)
+            if (snap.isFullTexture){
+                state.isFullTexture = false;
+                enqueueSnackbar('Full Textures function is Off. ' , { variant: 'default' });
+            }else{
+                state.isFullTexture = true;
+                enqueueSnackbar('Full Textures function is On' , { variant: 'info' });
+            }
+        }
+
     }
 
+    const updateSelectedModel = (model) => {
+        state.myItemShow = model;
+        switch (model) {
+            case 'shoe':
+                setCurrentModel(Shoe);
+                break;
+            case 'TShirt':
+                setCurrentModel(TShirt);
+                break;
+            default:
+                setCurrentModel(Shoe);
+                break;
+        }
+    }
 
     return (
         <motion.section>
@@ -189,6 +294,22 @@ const BidedItem = () => {
                 />
             </motion.div>
 
+            <motion.div className='z-10'
+                
+                >
+                    <div className="model-selector">
+                        <div onClick={() => updateSelectedModel("shoe")}>
+                            <img  src={'shoe.jpg'} alt={Shoe.title} />
+                            <h4>{Shoe.title}</h4>
+                        </div>
+                        <div onClick={() => updateSelectedModel("TShirt")}>
+                            <img  src={'TShirt.jpg'} alt={TShirt.title} />
+                            <h4>{TShirt.title}</h4>
+                        </div>
+
+                    </div>
+                </motion.div>
+
             <motion.div
                 className="absolute top-0 left-0 z-10"
                 {...slideAnimation('left')}
@@ -200,7 +321,12 @@ const BidedItem = () => {
                                 key={tab.name}
                                 tab={tab}
                                 handleClick={() => handleTabClick(tab.name)}
-                                okState={tab.name === "Delivery" ? state.deliveryState : state.cusState}
+                                okState={
+                                    tab.name == "Delivery" ? snap.deliveryState :
+                                        tab.name == "Customize" ? snap.cusState :
+                                            tab.name == "Logo" ? snap.isLogoTexture :
+                                                tab.name == "Textures" ? snap.isFullTexture : false
+                                }
                             />
                         ))}
                         {generateTabContent()}

@@ -179,7 +179,7 @@ export const Shoe = {
         auctionPosition:[70, 0, 360],
         signPosition:[0, -150, 950],
         otherPosition:[0.3,-0.5,10],
-        bidPosition: [-0.5,0,6]
+        bidPosition: [-0.3,0,6]
     },
     midSize:{
         homePosition:[-10, 30, 360],
@@ -196,3 +196,38 @@ export const Shoe = {
         bidPosition: [0.3,-0.5,10]
     },
 }
+
+export const TShirt = {
+    id: 93,
+    title: "T-Shirt",
+    description: "Ship-in-a-bottle is a model enclosed in glass, featuring a ship with masts, rigging, and a deckhouse, often made of wood. It's sealed with a cork or stopper.",
+    startPrice: 100,
+    price: 200,
+    endDate:"2023-04-15T00:00:00.000Z",
+    path:'shirt_baked.glb',
+    rotation: [0.3, -0.1, 0],
+    position: [0, 0, 0],
+    scale:[1.5,1.5,1.5],
+    normalSize:{
+        homePosition:[-50,0,360],
+        auctionPosition:[70, 0, 360],
+        signPosition:[0, -150, 950],
+        otherPosition:[0.4,-0.5,10],
+        bidPosition: [0.1,0,3]
+    },
+    midSize:{
+        homePosition:[-10, 30, 360],
+        auctionPosition:[70, 0, 360],
+        signPosition:[0, 0, 360],
+        otherPosition:[0, 0, 360],
+
+    },
+    phoneSize:{
+        homePosition:[0, 80, 550],
+        auctionPosition:[0, 0, 620],
+        signPosition:[0, -150, 950],
+        otherPosition:[250,-100,360],
+        bidPosition: [0.3,-0.5,10]
+    },
+}
+

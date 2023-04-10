@@ -30,8 +30,13 @@ const state = proxy({
     band: "#d3d3d3",
     patch: "#d3d3d3",
   },
+  myItemShow: 'shoe',
   ColorPickerOn: false,
-  logoDecal: 'threejs.png',
+  logoDecal: 'logo.png',
+  fullDecal: 'threejs.png',
+  isFullTexture : false,
+  isLogoTexture : true,
+  TShirtColor: '#DDDCDE',
 });
 
 export default state;

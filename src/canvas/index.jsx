@@ -5,7 +5,7 @@ import CameraRig from './CameraRig';
 import Model from './Model';
 import { useSnapshot } from 'valtio';
 import state from '../store';
-import { Ship, Shiba, Cup, Ball, Island, Shoe } from '../config/constants';
+import { Ship, Shiba, Cup, Ball, Island, Shoe, TShirt } from '../config/constants';
 
 const CanvasModel = () => {
   const snap = useSnapshot(state);
@@ -14,6 +14,11 @@ const CanvasModel = () => {
   const updateShoeCurrent = (pro) => {
     console.log(pro);
     state.current = pro;
+  };
+
+  const updateTShirtCurrent = (pro) => {
+    console.log(pro);
+    // state.current = pro;
   };
 
   const renderModel = () => {
@@ -32,12 +37,25 @@ const CanvasModel = () => {
       }
 
     }else if (snap.page == 'bidedItem'){
-        return <Model 
-          model={Shoe} 
-          editable={true}
-          updateCurrent={updateShoeCurrent}
-          />
-
+      console.log(snap.myItemShow);
+      switch (snap.myItemShow) {
+        case 'shoe':
+          return <Model
+            model={Shoe}
+            editable={true}
+            updateCurrent={updateShoeCurrent}
+            />
+        case 'TShirt':
+          return <Model model={TShirt}
+                  editable={true}
+                  updateCurrent={updateTShirtCurrent}/>
+        default:
+            return <Model 
+              model={Shoe} 
+              editable={true}
+              updateCurrent={updateShoeCurrent}
+              />
+          }
     } else {
       return <Model model={Ship}/>
     }
@@ -58,7 +76,14 @@ const CanvasModel = () => {
           return Ship
       }
     }else if (snap.page == 'bidedItem'){
-        return Shoe
+      switch (snap.myItemShow) {
+        case 'shoe':
+          return Shoe
+        case 'TShirt':
+          return TShirt
+        default:
+          return Shoe
+      }
     } else {
       return Ship
     }

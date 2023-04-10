@@ -12,6 +12,25 @@ const Tab = ({ tab, isFilterTab, isActiveTab, handleClick , okState }) => {
 
 const renderState = () => {
     if(tab.name != "ColorPicker"){
+        if(tab.name == 'Upload Logo' || tab.name == 'AI Helper') return
+
+        if (tab.name == 'Logo' || tab.name == 'Textures' ){
+            if(okState){
+                return (
+                    <div className="absolute top-[1rem] right-[-1.3rem] w-6 h-6 mr-2 rounded-full bg-green-500 text-xs flex justify-center items-center text-white">
+                        On
+                    </div>
+                )
+            }else{
+                return(
+                    <div className="absolute top-[1rem] right-[-1.3rem] w-6 h-6 mr-2 rounded-full bg-gray-500 text-xs flex justify-center items-center text-white">
+                        Off
+                    </div> 
+                )
+    
+            } 
+        }
+
         if(okState){
             return (
                 <div className="absolute top-[-1rem] right-[-1rem] text-green-500 text-3xl">

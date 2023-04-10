@@ -19,6 +19,7 @@ const Model = ({model, updateCurrent}) => {
 
   const [hovered, setHovered] = useState(null);
   const logoTexture = useTexture(snap.logoDecal);
+  const fullTexture = useTexture(snap.fullDecal);
   console.log(nodes)
   console.log(materials)
 
@@ -47,9 +48,11 @@ const Model = ({model, updateCurrent}) => {
   }
   const group = useRef()
 
+  
+
   const renderModel = () => {
     // console.log(model.title)
-    // console.log(model.title)
+    console.log(model.title)
     if (model.title == 'Shoe'){
       return(
         <group
@@ -119,95 +122,59 @@ const Model = ({model, updateCurrent}) => {
         geometry={nodes.shoe_7.geometry}
         material={materials.patch}
       />
-        {/* <group rotation={[-Math.PI / 2, 0, 0]}>
-          <group rotation={[Math.PI / 2, 0, 0]}>
-            <group
-              position={[735.89, 495.83, 692.58]}
-              rotation={[Math.PI, 0.76, 2.68]}
-              scale={100}
-            />
-            <group
-              position={[-37.57, -223.59, 77.18]}
-              rotation={[-1.57, -0.01, 0.01]}
-              scale={[103.84, 108.84, 476.71]}
-            >
-              <mesh castShadow geometry={nodes.Sphere__0.geometry}>
-                <meshStandardMaterial color={snap.colors.hull} name="hull" />
-              </mesh>
-            </group>
-            <group
-              position={[-44.14, -562.08, 77.18]}
-              rotation={[-Math.PI / 2, 0, 0]}
-              scale={[112.9, 120.19, 120.19]}
-            >
-              <mesh castShadow geometry={nodes.Cylinder__0.geometry}>
-                <meshStandardMaterial color={snap.colors.base} name="base" />
-              </mesh>
-            </group>
-            <group
-              position={[-37.58, 198.03, 77.18]}
-              rotation={[-Math.PI / 2, 0, 0]}
-              scale={[25.89, 120.19, 72.57]}
-            >
-              <mesh castShadow geometry={nodes.Sphere001__0.geometry}>
-                <meshStandardMaterial color={snap.colors.tip} name="tip" />
-              </mesh>
-            </group>
-            <group
-              position={[5.54, -555.21, -46.56]}
-              rotation={[-Math.PI / 2, 0, 2.9]}
-              scale={[33.29, 41.05, 67.48]}
-            >
-              <mesh castShadow geometry={nodes.Cube001__0.geometry}>
-                <meshStandardMaterial color={snap.colors.wings} name="wings" />
-              </mesh>
-            </group>
-            <group
-              position={[-175.48, -555.21, 92.53]}
-              rotation={[-Math.PI / 2, 0, -1.38]}
-              scale={[33.29, 41.05, 67.48]}
-            >
-              <mesh castShadow geometry={nodes.Cube002__0.geometry}>
-                <meshStandardMaterial color={snap.colors.wings} name="wings" />
-              </mesh>
-            </group>
-            <group
-              position={[27.08, -555.21, 197.81]}
-              rotation={[-Math.PI / 2, 0, 0.63]}
-              scale={[33.29, 41.05, 67.48]}
-            >
-              <mesh castShadow geometry={nodes.Cube003__0.geometry}>
-                <meshStandardMaterial color={snap.colors.wings} name="wings" />
-              </mesh>
-            </group>
-            <group
-              position={[-45.05, 156.5, 80.42]}
-              rotation={[-Math.PI / 2, 0, 0]}
-              scale={100}
-            >
-              <mesh castShadow geometry={nodes.Cylinder002__0.geometry}>
-                <meshStandardMaterial color={snap.colors.tip} name="tip" />
-              </mesh>
-            </group>
-            <group
-              position={[-40.41, -99.49, 79.72]}
-              rotation={[-0.05, -0.02, -1.58]}
-              scale={[71.67, 71.67, 115.24]}
-            >
-              <mesh castShadow geometry={nodes.Cylinder003__0.geometry}>
-                <meshStandardMaterial color={snap.colors.window} name="window" />
-              </mesh>
-            </group>
-          </group>
-        </group> */}
     </group>
       )
+    }else if (model.title == 'T-Shirt'){
+      console.log('fdsgsdfg')
+      return (
+        <group>
+          <mesh
+            castShadow
+            material-color={snap.TShirtColor}
+            geometry={nodes.T_Shirt_male.geometry}
+            material={materials.lambert1}
+            material-roughness={1}
+            dispose={null}
+          >
+            {snap.isFullTexture && (
+              <Decal 
+                position={[0, 0, 0]}
+                rotation={[0, 0, 0]}
+                scale={1.2}
+                map={fullTexture}
+              />
+            )
+          }
+
+            {snap.isLogoTexture && (
+              <Decal 
+                position={[0, 0.04, 0.15]}
+                rotation={[0, 0, 0]}
+                scale={0.15}
+                map={logoTexture}
+                map-anisotropy={16}
+                depthTest={false}
+                depthWrite={true}
+              />
+            )}
+          </mesh>
+        </group>
+      )
+        
     }else{
       return (
         <Scene/>
       )
     }
   }
+
+
+      useFrame((state, delta) => {
+        if(snap.myItemShow == 'TShirt' && model.title == 'TShirt'){
+          console.log('TShirt')
+          easing.dampC(materials.lambert1.color, snap.TShirtColor, 0.25, delta)
+        }
+      });
 
 
    return (

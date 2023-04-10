@@ -31,7 +31,11 @@ const ColorPicker = () => {
   const snap = useSnapshot(state);
   const updateColor = (pro, value) => {
     console.log(value.hex)
-    state.colors[pro] = value.hex;
+    if(snap.myItemShow == 'shoe'){
+      state.colors[pro] = value.hex;
+    }else if(snap.myItemShow == 'TShirt'){
+      state.TShirtColor = value.hex;
+    }
   };
 
   const getHeader = () => {
@@ -49,7 +53,7 @@ const ColorPicker = () => {
     <div className="absolute left-full ml-3 z-30">
       <span className=''>{getHeader()}</span>
       <SketchPicker 
-        color={snap.colors[snap.current]}
+        color={snap.myItemShow == 'shoe' ?  snap.colors[snap.current] : snap.TShirtColor}
         disableAlpha
         onChange={(color) => updateColor(snap.current, color)}
         className='z-30'
