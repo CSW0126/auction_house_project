@@ -333,6 +333,7 @@ const BidedItem = () => {
 
     const updateSelectedModel = (model) => {
         state.myItemShow = model;
+        setActiveEditorTab("");
         switch (model) {
             case 'shoe':
                 setCurrentModel(Shoe);
