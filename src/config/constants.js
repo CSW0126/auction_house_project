@@ -25,10 +25,10 @@ export const Ship = {
 
     },
     phoneSize:{
-        homePosition:[0, 80, 550],
-        auctionPosition:[0, 0, 620],
-        signPosition:[0, -150, 950],
-        otherPosition:[250,-100,360],
+        homePosition:[0, 120, 750],
+        auctionPosition:[0, -60, 620],
+        signPosition:[0, -120, 950],
+        otherPosition:[0,-30,700],
         bidPosition: [0.3,-0.5,10]
     },
   }
@@ -62,7 +62,7 @@ export const Shiba = {
         homePosition:[0, 80, 550],
         auctionPosition:[0, 0, 620],
         signPosition:[0, -150, 950],
-        otherPosition:[250,-100,360],
+        otherPosition:[0,-0.4,10],
         bidPosition: [0.3,-0.5,10]
     },
 }
@@ -94,8 +94,8 @@ export const Ball = {
     phoneSize:{
         homePosition:[0, 80, 550],
         auctionPosition:[0, 0, 620],
-        signPosition:[0, -150, 950],
-        otherPosition:[250,-100,360],
+        signPosition:[0, -150, 0],
+        otherPosition:[0,-1,25],
     },
 }
 
@@ -127,7 +127,7 @@ export const Cup = {
         homePosition:[0, 80, 550],
         auctionPosition:[0, 0, 620],
         signPosition:[0, -150, 950],
-        otherPosition:[250,-100,360],
+        otherPosition:[0,-1,35],
     },
 }
 
@@ -143,7 +143,7 @@ export const Island = {
     position: [0, 0, 0],
     scale:[1,1,1],
     normalSize:{
-        homePosition:[-50,0,360],
+        homePosition:[-50,-10,360],
         auctionPosition:[70, 0, 360],
         signPosition:[0, -150, 950],
         otherPosition:[4, -7,100],
@@ -159,7 +159,7 @@ export const Island = {
         homePosition:[0, 80, 550],
         auctionPosition:[0, 0, 620],
         signPosition:[0, -150, 950],
-        otherPosition:[250,-100,360],
+        otherPosition:[0,-10,170],
     },
 }
 
@@ -193,7 +193,7 @@ export const Shoe = {
         auctionPosition:[0, 0, 620],
         signPosition:[0, -150, 950],
         otherPosition:[250,-100,360],
-        bidPosition: [0.3,-0.5,10]
+        bidPosition: [-0,1.8,15]
     },
 }
 
@@ -227,7 +227,7 @@ export const TShirt = {
         auctionPosition:[0, 0, 620],
         signPosition:[0, -150, 950],
         otherPosition:[250,-100,360],
-        bidPosition: [0.3,-0.5,10]
+        bidPosition: [-0.1,0.4,5]
     },
 }
 

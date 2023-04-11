@@ -6,6 +6,7 @@ import state from '../store';
 import { useSnapshot } from 'valtio';
 import { useNavigate  } from "react-router-dom";
 import { Ship, Island, Cup, Ball, Shiba } from '../config/constants';
+import { AiOutlineHome } from 'react-icons/ai';
 
 const OtherGift = () => {
     const snap = useSnapshot(state);
@@ -56,8 +57,8 @@ const OtherGift = () => {
                     {...fadeAnimation}
                 >
                     <CustomButton 
-                        type="filled"
-                        title="Home"
+                        type="outline"
+                        title={<AiOutlineHome size={18}/>}
                         handleClick={() => handleGoBack()}
                         customStyles="w-fit px-4 py-2.5 font-bold text-sm"
                     />
@@ -103,7 +104,7 @@ const OtherGift = () => {
             </motion.div>
 
             <motion.div
-                className="absolute z-10 bottom-5 right-[48%]"
+                className="absolute z-10 bottom-5 top-[32rem] right-[1%] left-[1%] md:top-[36rem] md:right-[48%]"
             >
                 <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 md:p-10 lg:p-12 w-full max-w-2xl mx-auto">
                     <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold  text-gray-600 mb-2">

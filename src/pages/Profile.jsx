@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState,  useEffect} from 'react'
 import {motion} from 'framer-motion'
 import {signInFormAnimation, fadeAnimation} from '../config/motion'
 import CustomButton from '../components/CustomButton'
@@ -8,11 +8,31 @@ import { useNavigate  } from "react-router-dom";
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useSnackbar } from 'notistack';
+import { BiMenu } from 'react-icons/bi';
+import { Collapse } from '@mui/material';
+import { AiOutlineHome } from 'react-icons/ai';
 
 const Profile = () => {
     const snap = useSnapshot(state);
     const { enqueueSnackbar } = useSnackbar();
     let navigate  = useNavigate();
+
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setInnerWidth(window.innerWidth);
+      };
+  
+      window.addEventListener('resize', handleResize);
+  
+      // Clean up the event listener on unmount
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const handleMenuToggle = () => {
+        setMenuOpen(!menuOpen);
+      };
 
     const handleGoBidedItem = () => {
         state.page = 'otherGift';
@@ -51,66 +71,75 @@ const Profile = () => {
             {...signInFormAnimation}
         >
             <motion.div
-                    className="absolute z-10 top-5 left-5"
+                    className="absolute z-20 top-5 left-5"
                     {...fadeAnimation}
                 >
                     <CustomButton 
-                        type="filled"
-                        title="Home"
+                        type="outline"
+                        title={<AiOutlineHome size={18} />}
                         handleClick={() => handleGoBack()}
                         customStyles="w-fit px-4 py-2.5 font-bold text-sm"
                     />
             </motion.div>
 
             <motion.div
-                    className="absolute z-10 top-5 right-5"
+                    className="absolute z-20 top-5 right-5"
                     {...fadeAnimation}
                 >
-                        <CustomButton 
-                            type="filled"
-                            title="All Products"
-                            handleClick={() => handleGoBidedItem()}
-                            customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
-                        />
-                    <button className="relative bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mr-2" onClick={()=>handleAcqItemClick()}>
-                        <span className="inline-flex rounded-full bg-red-500 text-dark w-4 h-4 absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2"></span>
-                        Acquired Item
-                    </button>
-                    <CustomButton 
-                        type="filled"
-                        title="Auction"
-                        handleClick={() => handleGoAuction()}
-                        customStyles="w-fit px-4 py-2.5 font-bold text-sm"
-                    />
+                    {innerWidth <= 960 ? 
+                        <>
+                            <div className='flex flex-row justify-end'>                        
+                                <button className=" items-end  bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mr-2" onClick={()=>handleMenuToggle()}>
+                                    <BiMenu size={24}/>
+                                </button>
+                            </div>  
+                            <Collapse in={menuOpen} timeout="auto" unmountOnExit className=''>
+                                <div className='mt-5 grid grid-cols-1'>
+                                    <CustomButton 
+                                        type="filled"
+                                        title="All Products"
+                                        handleClick={() => handleGoBidedItem()}
+                                        customStyles="w-full px-4 py-2.5 font-bold text-sm mt-2"
+                                    />
+                                    <button className="relative bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mt-2" onClick={()=>handleAcqItemClick()}>
+                                        <span className="inline-flex rounded-full bg-red-500 text-dark w-4 h-4 absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2"></span>
+                                        Acquired Item
+                                    </button>
+                                    <CustomButton 
+                                        type="filled"
+                                        title="Auction"
+                                        handleClick={() => handleGoAuction()}
+                                        customStyles="w-full px-4 py-2.5 font-bold text-sm mt-2"
+                                    />
+                                </div>
+                            </Collapse>
+                        </>
+                        :
+                        <>
+                            <CustomButton 
+                                type="filled"
+                                title="All Products"
+                                handleClick={() => handleGoBidedItem()}
+                                customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
+                            />
+                            <button className="relative bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mr-2" onClick={()=>handleAcqItemClick()}>
+                                <span className="inline-flex rounded-full bg-red-500 text-dark w-4 h-4 absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2"></span>
+                                Acquired Item
+                            </button>
+                            <CustomButton 
+                                type="filled"
+                                title="Auction"
+                                handleClick={() => handleGoAuction()}
+                                customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+                            />
+                        </>}
+
             </motion.div>
 
             <motion.div
-                className="z-10 absolute w-auto flex flex-col justify-center items-center py-4 gap-4 h-screen"
+                className="z-10 absolute w-auto flex flex-col justify-center items-center py-4 gap-4 h-screen ml-5"
             >
                 <div className="bg-white rounded-lg shadow-md p-6">
-
-                    {/* <div className="flex flex-col md:flex-row mb-4">
-                        <div className="md:w-1/3 font-bold">Balance:</div>
-                        <div className="md:w-2/3 font-bold">
-                            ${snap.fakeUser.balance.toFixed(2)}
-                        </div>
-                    </div>
-
-                    <div className="flex justify-end mb-4">
-                        <button
-                            className="bg-blue-500 text-white rounded-lg px-4 py-2 mr-4"
-                            onClick={() => handleWithdraw(1000)}
-                        >
-                            Withdraw $1000
-                        </button>
-                        <button
-                            className="bg-blue-500 text-white rounded-lg px-4 py-2"
-                            onClick={() => handleDeposit(1000)}
-                        >
-                            Deposit $1000
-                        </button>
-                    </div> */}
-
                     <div className="text-2xl font-bold mb-4">{snap.fakeUser.username}</div>
                     <div className="flex flex-col md:flex-row mb-4">
                         <div className="md:w-1/3 font-bold">Contact Number:</div>

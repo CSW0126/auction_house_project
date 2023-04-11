@@ -26,19 +26,10 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
+import {BiMenu} from 'react-icons/bi';
 
 import {RxExclamationTriangle} from 'react-icons/rx'
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 'auto',
-    // bgcolor: 'background.paper',
-    p: 4,
-    // borderRadius: 5,
-  };
+import { AiOutlineHome } from 'react-icons/ai';
 
 const Auction = () => {
     const snap = useSnapshot(state);
@@ -70,6 +61,23 @@ const Auction = () => {
             "From": "a***a"  
         }]
     );
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setInnerWidth(window.innerWidth);
+      };
+  
+      window.addEventListener('resize', handleResize);
+  
+      // Clean up the event listener on unmount
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const handleMenuToggle = () => {
+        setMenuOpen(!menuOpen);
+      };
+    
     const { enqueueSnackbar } = useSnackbar();
     const [open, setOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(useIsAuthenticated())
@@ -79,6 +87,26 @@ const Auction = () => {
     const [openModal, setOpenModal] = useState(false);
     const handleOpen = () => setOpenModal(true);
     const handleClose = () => setOpenModal(false);
+
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 'auto',
+        p: 4,
+    };
+
+    const stylePhone = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        // transform: 'translate(-50%, -50%)',
+        width: 'auto',
+        p: 4,
+    };
+
 
     const bidBtn = () => {
         if(isAuthenticated){
@@ -147,8 +175,8 @@ const Auction = () => {
                 {...fadeAnimation}
             >
                 <CustomButton 
-                    type="filled"
-                    title="Home"
+                    type="outline"
+                    title={<AiOutlineHome size={18}/>}
                     handleClick={() => handleGoBack()}
                     customStyles="w-fit px-4 py-2.5 font-bold text-sm"
                 />
@@ -158,15 +186,61 @@ const Auction = () => {
                 className="absolute z-10 top-5 right-5"
                 {...fadeAnimation}
             >
-                {isAuthenticated? ( 
-                       
-                    <>
+                {isAuthenticated? 
+                    innerWidth <= 960 ? (
+                        <>
+                        <div className='flex flex-row justify-end'>                        
+                            <button className=" items-end  bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mr-2" onClick={()=>handleMenuToggle()}>
+                                <BiMenu size={24}/>
+                            </button>
+                        </div>                        
+
+
+                            <Collapse in={menuOpen} timeout="auto" unmountOnExit className=''>
+                            <div className='mt-5 grid grid-cols-1'>
+                                <CustomButton 
+                                    type="filled"
+                                    title="All Products"
+                                    handleClick={() => handleGoBidedItem()}
+                                    customStyles="w-full px-4 py-2.5 font-bold text-sm"
+                                />
+
+                                <CustomButton 
+                                    type="filled"
+                                    title="Profile"
+                                    handleClick={() => handleGoProfile()}
+                                    customStyles="w-full px-4 py-2.5 font-bold text-sm mt-2"
+                                />
+                                <button className="relative bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mt-2 w-full" onClick={()=>handleAcqItemClick()}>
+                                    <span className="inline-flex rounded-full bg-red-500 text-dark w-4 h-4 absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2"></span>
+                                    Acquired Item
+                                </button>
+                                
+                                    
+                                <CustomButton 
+                                    type="filled"
+                                    title="Logout"
+                                    handleClick={() => handleLogout()}
+                                    customStyles="w-full px-4 py-2.5 font-bold text-sm mt-2"
+                                />
+                            </div>
+
+                            </Collapse>
+
+
+                        </>
+
+                    
+                    ):
+                    (                  
+                        <>
                         <CustomButton 
                             type="filled"
                             title="All Products"
                             handleClick={() => handleGoBidedItem()}
                             customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
                         />
+
                         <CustomButton 
                             type="filled"
                             title="Profile"
@@ -186,9 +260,10 @@ const Auction = () => {
                             customStyles="w-fit px-4 py-2.5 font-bold text-sm"
                         />
 
-                    </>
+                    </>)
 
-                    ):(
+
+                    :(
                     <>
                         <CustomButton 
                             type="filled"
@@ -211,7 +286,7 @@ const Auction = () => {
             
 
             <motion.div
-                className='absolute z-10 top-[70%] md:top-[18%] md: right-[8%] max-w-[500px] md:max-w-[550px]'
+                className='absolute z-10 top-[45%] right-[0%] md:top-[18%] md:right-[8%] max-w-[500px] md:max-w-[550px] mx-2'
                 {...slideAnimationForForm}
             >
                 <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 md:p-10 lg:p-12 w-full max-w-2xl mx-auto">
@@ -227,8 +302,8 @@ const Auction = () => {
                         {Ship.description}
                     </div>
 
-                    <div className='border border-[#e3e3e3] p-5 flex text-[#646d75] mb-3'>
-                        <AiOutlineClockCircle color='#646d75' size={'24px'}/>
+                    <div className='flex justify-center items-center border border-[#e3e3e3] p-5  text-[#646d75] mb-3 text-xs  sm:text-sm md:text-base lg:text-lg text-center'>
+                        <AiOutlineClockCircle color='#646d75' className='text-xs  sm:text-sm md:text-base lg:text-lg'/>
                         &nbsp;&nbsp;Sale ends in {moment(Ship.endDate).format('DD-MMM-YYYY HH:mm:ss')}
                     </div>    
                     
@@ -307,38 +382,8 @@ const Auction = () => {
                         }}
                     >
                         <Fade in={openModal}>
-                        <Box sx={style}>
-
-                            {/* <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold  text-gray-600 mb-2">
-                                Make Offer
-                            </div>
-                            <Typography id="transition-modal-description" sx={{ mt: 2 }} className='max-w-md font-normal text-gray-600 text-base'>
-                                Each bid will increase the price by <strong>10$</strong> of the current price. You can bid as many times as you want. 
-                            </Typography>
-
-                            <div style={{ fontSize: '12px', fontStyle: 'italic' }} className='mt-1'>
-                                *The highest bidder will win the auction.
-                            </div>
-
-                            <div className='mt-2'>
-                                New Price: <strong>${fakeShip.price + 10}</strong>
-                            </div>
-
-                            <div className='flex justify-start mt-5'>
-                                <button
-                                    className={`flex-1 rounded-md w-fit py-2.5 font-bold text-sm mr-2 bg-red-500 hover:bg-red-600 text-white`}
-                                    onClick={() => handleClose()}
-                                    >
-                                    Cancel
-                                </button>
-                                <button
-                                    className={`flex-1 rounded-md w-fit py-2.5 font-bold text-sm ml-2 bg-green-500 hover:bg-green-600 text-white`}
-                                    onClick={() => handleConfirm()}
-                                    >
-                                    Confirm
-                                </button>
-                            </div> */}
-                            <div className="bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative">
+                        <Box sx={innerWidth <=960 ? stylePhone : style}>
+                            <div className="bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-[15rem] md:mb-4 mx-4 md:relative">
                                 <div className="md:flex items-center">
                                     <div className="rounded-full border border-gray-300 flex items-center justify-center w-16 h-16 flex-shrink-0 mx-auto">
                                         <RxExclamationTriangle size={24}/>

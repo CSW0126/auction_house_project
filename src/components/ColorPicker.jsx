@@ -50,7 +50,7 @@ const ColorPicker = () => {
   }
 
   return (
-    <div className="absolute left-full ml-3 z-30">
+    <div className="absolute left-full ml-3 z-30 top-[10rem] md:top-auto">
       <span className=''>{getHeader()}</span>
       <SketchPicker 
         color={snap.myItemShow == 'shoe' ?  snap.colors[snap.current] : snap.TShirtColor}

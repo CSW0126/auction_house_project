@@ -40,11 +40,11 @@ body{
 }
 
 .filtertabs-container {
-  @apply absolute z-10 bottom-5 right-0 left-0 w-full flex justify-center items-center flex-wrap gap-4;
+  @apply absolute z-10 bottom-auto  top-5 md:top-auto md:bottom-5 right-0 left-0 w-full flex justify-center items-center flex-wrap gap-4;
 }
 
 .filepicker-container {
-  @apply absolute left-full ml-3 glassmorphism p-3 w-[220px] h-[220px] flex flex-col rounded-md;
+  @apply absolute left-full ml-3 glassmorphism p-3 w-[180px] h-[180px]  md:w-[220px] md:h-[220px] flex flex-col rounded-md top-[12rem] md:top-auto;
 }
 
 .filepicker-label {
@@ -53,11 +53,11 @@ body{
 
 
 .editortabs-container {
-  @apply glassmorphism w-[5.4rem] border-[2px] rounded-lg flex flex-col justify-center items-center ml-1 py-4 gap-4;
+  @apply glassmorphism w-[5.4rem] border-[2px] rounded-lg flex flex-col justify-start md:justify-center items-center ml-1 py-4 gap-4;
 }
 
 .aipicker-container {
-  @apply absolute left-full ml-3 glassmorphism p-3 w-[400px] h-[220px] rounded-md flex flex-col gap-4;
+  @apply absolute left-full ml-3 glassmorphism p-3 w-[220px] h-[220px] md:w-[400px] md:h-[220px] rounded-md flex flex-col gap-4;
 }
 
 .aipicker-textarea {
@@ -68,13 +68,6 @@ body{
   @apply w-14 h-14 flex justify-center items-center cursor-pointer select-none;
 }
 
-.color-picker {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  z-index: 10;
-  transition: opacity 0.3s;
-}
 .model-selector {
   position: absolute;
   top: 4rem;
@@ -100,6 +93,37 @@ body{
 .model-selector div:hover {
   cursor: pointer;
 }
+@media (max-width: 768px) {
+  .model-selector {
+    position: absolute;
+    top: 4rem;
+    right: 0rem;
+    z-index: 10;
+    height: 90vh;
+    max-height: 90vh;
+    margin: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .model-selector div h4 {
+      font-size: 0.8rem;
+      text-align: center;
+      margin: 0;
+  }
+  .model-selector div img {
+    max-width: 70px;
+    min-height: 70px;
+    max-height: 70px;
+    object-fit: contain;
+  }
+
+  .model-selector div:hover {
+    cursor: pointer;
+  }
+}
+
 
 .glassmorphism {
   background: rgba(255, 255, 255, 0.25);

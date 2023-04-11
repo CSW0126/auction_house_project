@@ -19,18 +19,12 @@ import { reader } from '../config/helper';
 import {RxExclamationTriangle} from 'react-icons/rx'
 import FilePicker from '../components/FilePicker';
 import AIPicker from '../components/AIPicker';
+import { AiOutlineHome } from 'react-icons/ai';
+
+import { BiMenu } from 'react-icons/bi';
+import { Collapse } from '@mui/material';
 
 import { Configuration, OpenAIApi } from 'openai';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 'auto',
-    // background transparent
-    bgcolor: 'transparent',
-  };
 
 const ShoeTab = [{
     name: "ColorPicker",
@@ -94,7 +88,43 @@ const BidedItem = () => {
     const [currentModel, setCurrentModel] = useState(Shoe);
     const [EditorTabs, setEditorTabs] = useState(snap.myItemShow == "shoe" ? ShoeTab : TShirtTab);
 
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 'auto',
+        // background transparent
+        bgcolor: 'transparent',
+      };
+    
+      const stylePhone = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        // transform: 'translate(-50%, -50%)',
+        width: 'auto',
+        // background transparent
+        bgcolor: 'transparent',
+      };
     let navigate  = useNavigate();
+
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setInnerWidth(window.innerWidth);
+      };
+  
+      window.addEventListener('resize', handleResize);
+  
+      // Clean up the event listener on unmount
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const handleMenuToggle = () => {
+        setMenuOpen(!menuOpen);
+      };
 
     useEffect(() => {
         state.cusState = false
@@ -181,7 +211,7 @@ const BidedItem = () => {
             setActiveEditorTab("");
         }else if (item === "Customize") {
             state.cusState = true;
-            enqueueSnackbar("Message received. We will call your for more customization details." , { variant: 'confirm' });
+            enqueueSnackbar("Message received. We will call you for more customization details." , { variant: 'confirm' });
             setActiveEditorTab("");
         }
 
@@ -323,29 +353,57 @@ const BidedItem = () => {
                 {...fadeAnimation}
             >
                 <CustomButton
-                    type="filled"
-                    title="Home"
+                    type="outline"
+                    title={<AiOutlineHome size={18} />}
                     handleClick={() => handleGoBack()}
                     customStyles="w-fit px-4 py-2.5 font-bold text-sm"
                 />
             </motion.div>
             <motion.div
-                className="absolute z-10 top-5 right-5"
+                className="absolute z-20 top-5 right-5"
                 {...fadeAnimation}
             >
-                <CustomButton
-                    type="filled"
-                    title="Profile"
-                    handleClick={() => handleGoProfile()}
-                    customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
-                />
+                {innerWidth <= 960 ? 
+                <>
+                    <div className='flex flex-row justify-end'>                        
+                        <button className=" items-end  bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mr-2" onClick={()=>handleMenuToggle()}>
+                            <BiMenu size={24}/>
+                        </button>
+                    </div>  
+                    <Collapse in={menuOpen} timeout="auto" unmountOnExit className=''>
+                        <div className='mt-5 grid grid-cols-1'>
+                            <CustomButton
+                                type="filled"
+                                title="Profile"
+                                handleClick={() => handleGoProfile()}
+                                customStyles="w-full px-4 py-2.5 font-bold text-sm mt-2"
+                            />
 
-                <CustomButton
-                    type="filled"
-                    title="Auction"
-                    handleClick={() => handleGoAuction()}
-                    customStyles="w-fit px-4 py-2.5 font-bold text-sm"
-                />
+                            <CustomButton
+                                type="filled"
+                                title="Auction"
+                                handleClick={() => handleGoAuction()}
+                                customStyles="w-full px-4 py-2.5 font-bold text-sm mt-2"
+                            />
+                        </div>
+                    </Collapse>
+                </> 
+                : 
+                <>
+                    <CustomButton
+                        type="filled"
+                        title="Profile"
+                        handleClick={() => handleGoProfile()}
+                        customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
+                    />
+
+                    <CustomButton
+                        type="filled"
+                        title="Auction"
+                        handleClick={() => handleGoAuction()}
+                        customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+                    />
+                </>}
             </motion.div>
 
             <motion.div className='z-10'
@@ -413,8 +471,8 @@ const BidedItem = () => {
                     }}
                 >
                     <Fade in={open}>
-                    <Box sx={style}>
-                        <div className="bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative">
+                    <Box sx={innerWidth <=960 ? stylePhone : style}>
+                        <div className="bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0  mb-[15rem] md:mb-4 mx-4 md:relative">
                             <div className="md:flex items-center">
                                 <div className="rounded-full border border-gray-300 flex items-center justify-center w-16 h-16 flex-shrink-0 mx-auto">
                                     <RxExclamationTriangle size={24}/>

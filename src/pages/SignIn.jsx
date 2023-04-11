@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import CustomButton from '../components/CustomButton'
 import { fadeAnimation, signInFormAnimation } from '../config/motion'
@@ -7,6 +7,9 @@ import { useSnapshot } from 'valtio';
 import { useSignIn } from "react-auth-kit";
 import { useFormik } from "formik";
 import state from '../store';
+import {AiOutlineHome} from 'react-icons/ai'
+import { BiMenu } from 'react-icons/bi';
+import { Collapse } from '@mui/material';
 
 const SignIn = () => {
     const snap = useSnapshot(state);
@@ -14,6 +17,23 @@ const SignIn = () => {
     const [showError, setShowError] = useState(false)
     let navigate = useNavigate();
     const signIn = useSignIn();
+
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setInnerWidth(window.innerWidth);
+      };
+  
+      window.addEventListener('resize', handleResize);
+  
+      // Clean up the event listener on unmount
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const handleMenuToggle = () => {
+        setMenuOpen(!menuOpen);
+      };
 
     const handleGoBack = () => {
         state.page = 'home';
@@ -56,41 +76,6 @@ const SignIn = () => {
             });
             state.page = 'auction';
             navigate('/auction_house_project/auction')
-        
-            // try {
-            //     const url = process.env.REACT_APP_SERVER_HOST + '/user/signIn'
-            //     const body = {
-            //         username : values.username,
-            //         password: values.password
-            //     }
-            //     const response = await axios.post(
-            //         url,
-            //         body
-            //     );
-            //     console.log(response)
-        
-            //     if (response.data.status == 'success'){
-            //         let user = response.data.user
-            //         user.record = []
-            //         signIn({
-            //             token: response.data.token,
-            //             expiresIn: 360000,
-            //             tokenType: "Bearer",
-            //             authState: { user: user},
-            //           });
-            //         navigate('/')
-            //     }else{
-            //         console.log('error')
-            //         setError(response.data.status)
-            //     }
-            // } catch (err) {
-            //   if (err && err instanceof AxiosError)
-            //     setError(err.response?.data.message);
-            //   else if (err && err instanceof Error) setError(err.message);
-        
-            //   console.log("Error: ", err);
-            //   setShowError(true)
-            // }
         },
     });
 
@@ -104,8 +89,8 @@ const SignIn = () => {
                     {...fadeAnimation}
                 >
                     <CustomButton 
-                        type="filled"
-                        title="Home"
+                        type="outline"
+                        title={<AiOutlineHome size={18}/>}
                         handleClick={() => handleGoBack()}
                         customStyles="w-fit px-4 py-2.5 font-bold text-sm"
                     />
@@ -115,31 +100,64 @@ const SignIn = () => {
                     className="absolute z-10 top-5 right-5"
                     {...fadeAnimation}
                 >
-                    <CustomButton 
-                        type="filled"
-                        title="All Products"
-                        handleClick={() => handleGoBidedItem()}
-                        customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
-                    />
-                    <CustomButton 
-                        type="filled"
-                        title="Auction"
-                        handleClick={() => handleGoAuction()}
-                        customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
-                    />
-                    <CustomButton 
-                        type="filled"
-                        title="Sign Up"
-                        handleClick={() => handleSignUp()}
-                        customStyles="w-fit px-4 py-2.5 font-bold text-sm"
-                    />
+                    {innerWidth <= 960 ? 
+                    <>
+                        <div className='flex flex-row justify-end'>                        
+                            <button className=" items-end  bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mr-2" onClick={()=>handleMenuToggle()}>
+                                <BiMenu size={24}/>
+                            </button>
+                        </div>  
+                        <Collapse in={menuOpen} timeout="auto" unmountOnExit className=''>
+                            <div className='mt-5 grid grid-cols-1'>
+                                <CustomButton 
+                                    type="filled"
+                                    title="All Products"
+                                    handleClick={() => handleGoBidedItem()}
+                                    customStyles="w-full px-4 py-2.5 font-bold text-sm mt-2"
+                                />
+                                <CustomButton 
+                                    type="filled"
+                                    title="Auction"
+                                    handleClick={() => handleGoAuction()}
+                                    customStyles="w-full px-4 py-2.5 font-bold text-sm mt-2"
+                                />
+                                <CustomButton 
+                                    type="filled"
+                                    title="Sign Up"
+                                    handleClick={() => handleSignUp()}
+                                    customStyles="w-full px-4 py-2.5 font-bold text-sm mt-2"
+                                />
+                            </div>
+                        </Collapse>
+                    </> : 
+                    <>                    
+                        <CustomButton 
+                            type="filled"
+                            title="All Products"
+                            handleClick={() => handleGoBidedItem()}
+                            customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
+                        />
+                        <CustomButton 
+                            type="filled"
+                            title="Auction"
+                            handleClick={() => handleGoAuction()}
+                            customStyles="w-fit px-4 py-2.5 font-bold text-sm mr-2"
+                        />
+                        <CustomButton 
+                            type="filled"
+                            title="Sign Up"
+                            handleClick={() => handleSignUp()}
+                            customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+                        />
+                    </>}
+
             </motion.div>
 
             <motion.div
-                className="absolute z-10 top-[28%] left-[30%]"
+                className="absolute z-10  top-[20rem] left-[10%] sm:top-[10rem] sm:left-[8%] md:left-[18%] md:top-[10rem] lg:left-[30%] lg:top-[10rem] xl:top-[28%] xl:left-[30%]"
                 {...signInFormAnimation}
             >
-                <div className="relative flex flex-col justify-center overflow-hidden w-[600px] h-[600px]">
+                <div className="relative flex flex-col justify-center overflow-hidden w-fit h-fit sm:w-[600px] sm:h-[600px]">
                     <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl text-black">
                         <h1 className="text-3xl font-semibold text-center">
                         Sign in
