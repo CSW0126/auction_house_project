@@ -456,7 +456,7 @@ const BidedItem = () => {
                     onClick={handleOpen}
                     disabled={shipState}
                 >
-                {shipState ? "Please 3-7 working days for delivery." :"Confirm Shipments"}
+                {shipState ? "Please wait for delivery." :"Confirm Shipments"}
                 </button>
                 <Modal
                     aria-labelledby="transition-modal-title"
