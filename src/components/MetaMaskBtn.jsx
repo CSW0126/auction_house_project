@@ -8,10 +8,10 @@ const MetaMaskBtn = ({handleCorrect}) => {
   const [correctNetwork, setCorrectNetwork] = useState(false);
 
   useEffect(() => {
-    if(correctNetwork){
+    if(correctNetwork && connected && networkId==5){
       handleCorrect()
     }
-  }, [correctNetwork]);
+  }, [correctNetwork, connected, networkId]);
 
   const connectWallet = async () => {
     try {

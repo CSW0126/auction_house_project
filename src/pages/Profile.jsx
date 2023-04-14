@@ -22,6 +22,7 @@ const Profile = () => {
     const snap = useSnapshot(state);
     const { enqueueSnackbar } = useSnackbar();
     let navigate  = useNavigate();
+    const [mint, setMint] = useState(false);
 
     const [innerWidth, setInnerWidth] = useState(window.innerWidth);
     const [correctNetwork, setCorrectNetwork] = useState(false);
@@ -217,19 +218,25 @@ const Profile = () => {
             <motion.div
                 {...fadeAnimation}
             >
-                <div className="bg-white rounded-lg shadow-md p-6 z-10 absolute w-[700px] h-[700px] right-10 top-1/2 transform -translate-y-1/2">
+                <div className="bg-white rounded-lg shadow-md p-6 z-10 absolute w-[650px] h-[650px] right-20 top-[25rem] transform -translate-y-1/2">
                     <div className="flex flex-col justify-center items-center py-4 gap-4 h-[550px] mb-4">
                         <MetaMaskBtn  handleCorrect={()=>handleCorrect()}/>
                         {/* <div className="text-2xl font-bold mb-4">Mint your NFT!</div> */}
-                        {correctNetwork ?
+                        {correctNetwork && !mint ?
                         (                        
-                        <button className="block mx-auto px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none focus:shadow-outline">
-                            Mint
-                        </button>):
+                            <button className="relative bg-[#06B6D4] text-dark rounded-lg font-bold text-sm px-4 py-2.5 mr-2" 
+                                onClick={()=> {
+                                        enqueueSnackbar('The NFT has been sent to your wallet', 'success')
+                                        setMint(true)
+                                    }}>
+                                Mint NFT
+                            </button>
+                        )
+                        :
                         
                         (<></>)}
 
-                        <div className='w-[500px] h-[500px]'>
+                        <div className='w-[450px] h-[450px]'>
                             {renderNFT()}
                         </div>
 
