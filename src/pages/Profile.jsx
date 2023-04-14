@@ -5,12 +5,18 @@ import CustomButton from '../components/CustomButton'
 import state from '../store';
 import { useSnapshot } from 'valtio';
 import { useNavigate  } from "react-router-dom";
-import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useSnackbar } from 'notistack';
 import { BiMenu } from 'react-icons/bi';
 import { Collapse } from '@mui/material';
 import { AiOutlineHome } from 'react-icons/ai';
+
+import { OrbitControls } from '@react-three/drei';
+import useSpline from '@splinetool/r3f-spline'
+import Spline from '@splinetool/react-spline';
+import MetaMaskBtn from '../components/MetaMaskBtn';
+
+
 
 const Profile = () => {
     const snap = useSnapshot(state);
@@ -18,6 +24,7 @@ const Profile = () => {
     let navigate  = useNavigate();
 
     const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+    const [correctNetwork, setCorrectNetwork] = useState(false);
 
     useEffect(() => {
       const handleResize = () => {
@@ -65,6 +72,18 @@ const Profile = () => {
             [name]: value,
         };
     };
+
+    const renderNFT =(props={}) =>{
+        const {nodes, materials} = useSpline('https://prod.spline.design/guuXvrnmY9qTKAKk/scene.splinecode')
+        console.log(nodes, materials)
+        return(
+            <Spline scene="https://prod.spline.design/guuXvrnmY9qTKAKk/scene.splinecode" className='w-fit h-fit'/>
+        )
+    }
+
+    const handleCorrect =() =>{
+        setCorrectNetwork(true);
+    }
     return (
         <motion.section
             className='signin'
@@ -195,6 +214,29 @@ const Profile = () => {
                 </div>
             </motion.div>
             
+            <motion.div
+                {...fadeAnimation}
+            >
+                <div className="bg-white rounded-lg shadow-md p-6 z-10 absolute w-[700px] h-[700px] right-10 top-1/2 transform -translate-y-1/2">
+                    <div className="flex flex-col justify-center items-center py-4 gap-4 h-[550px] mb-4">
+                        <MetaMaskBtn  handleCorrect={()=>handleCorrect()}/>
+                        {/* <div className="text-2xl font-bold mb-4">Mint your NFT!</div> */}
+                        {correctNetwork ?
+                        (                        
+                        <button className="block mx-auto px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none focus:shadow-outline">
+                            Mint
+                        </button>):
+                        
+                        (<></>)}
+
+                        <div className='w-[500px] h-[500px]'>
+                            {renderNFT()}
+                        </div>
+
+                    </div>
+                </div>
+
+            </motion.div>
         </motion.section>
     )
 }
