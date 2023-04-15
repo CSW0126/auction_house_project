@@ -350,7 +350,7 @@ const BidedItem = () => {
     return (
         <motion.section>
             <motion.div
-                className="absolute z-20 top-5 left-5"
+                className="absolute z-20 top-5 left-10 sm:left-[6rem]"
                 {...fadeAnimation}
             >
                 <CustomButton
