@@ -1,11 +1,11 @@
-import React from 'react'
+import React,{lazy, Suspense} from 'react'
 import { Routes, Route, Navigate,useLocation   } from 'react-router-dom';
 import { RequireAuth } from 'react-auth-kit';
 import Home from "./pages/Home"
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 
-import Profile from './pages/Profile';
+// import Profile from './pages/Profile';
 import Auction from './pages/Auction';
 import OtherGift from './pages/OtherGift';
 import BidedItem from './pages/BidedItem';
@@ -17,8 +17,10 @@ import {AnimatePresence } from 'framer-motion';
 
 const AnimatedRoute = () => {
     const location = useLocation();
+    const Profile = lazy(() => import('./pages/Profile'));
     return (
         <AnimatePresence>
+            <Suspense fallback={<div>Loading...</div>}>
             <Routes location={location} key={location.pathname}>
                 <Route path="/auction_house_project/" element={<Home />} />
                 <Route path="/auction_house_project/signin" element={<SignIn />} />
@@ -48,6 +50,7 @@ const AnimatedRoute = () => {
 
                 <Route path="*" element={<Navigate to="/auction_house_project/" />} />
             </Routes>
+            </Suspense>
             <Canvas key={'ship_canvas'}/>
         </AnimatePresence>
   )
