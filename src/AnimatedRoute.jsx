@@ -4,6 +4,7 @@ import { RequireAuth } from 'react-auth-kit';
 import Home from "./pages/Home"
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import Loading from './components/Loading';
 
 // import Profile from './pages/Profile';
 import Auction from './pages/Auction';
@@ -20,7 +21,7 @@ const AnimatedRoute = () => {
     const Profile = lazy(() => import('./pages/Profile'));
     return (
         <AnimatePresence>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading/>}>
             <Routes location={location} key={location.pathname}>
                 <Route path="/auction_house_project/" element={<Home />} />
                 <Route path="/auction_house_project/signin" element={<SignIn />} />

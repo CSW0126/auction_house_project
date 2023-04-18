@@ -157,7 +157,7 @@ const Profile = () => {
             </motion.div>
 
             <motion.div
-                className="z-10 absolute w-auto flex flex-col justify-center items-center py-4 gap-4 h-screen ml-5"
+                className="z-10 absolute w-auto flex flex-col justify-center items-center py-4 gap-4 h-screen ml-5 "
             >
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <div className="text-2xl font-bold mb-4">{snap.fakeUser.username}</div>
@@ -218,7 +218,7 @@ const Profile = () => {
             <motion.div
                 {...fadeAnimation}
             >
-                <div className="bg-white rounded-lg shadow-md p-6 z-10 absolute w-[650px] h-[650px] right-20 top-[25rem] transform -translate-y-1/2">
+                <div className="bg-white rounded-lg shadow-md p-6 z-10 absolute w-[380px] h-[600px] md:w-[650px] md:h-[650px] right-1 md:right-20 top-[70rem] md:top-[25rem] transform -translate-y-1/2">
                     <div className="flex flex-col justify-center items-center py-4 gap-4 h-[550px] mb-4">
                         <MetaMaskBtn  handleCorrect={()=>handleCorrect()}/>
                         {/* <div className="text-2xl font-bold mb-4">Mint your NFT!</div> */}
@@ -236,7 +236,7 @@ const Profile = () => {
                         
                         (<></>)}
 
-                        <div className='w-[450px] h-[450px]'>
+                        <div className='w-[300px] h-[400px] md:w-[450px] md:h-[450px]'>
                             {renderNFT()}
                         </div>
 
