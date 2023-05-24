@@ -31,6 +31,33 @@ npm run dev
 This will launch the web application in your browser. 
 <br>(Example: http://127.0.0.1:5173/auction_house_project/)
 
+## Some Screenshots
+Dashboard
+<br>
+<img src="Img/main.jpg">
+<br>
+All Item
+<br>
+<img src="Img/all.jpg">
+<br>
+Auction Item
+<br>
+<img src="Img/bid.jpg">
+<br>
+Profile
+<br>
+<img src="Img/profile.jpg">
+<br>
+Shoe Customization
+<br>
+<img src="Img/shoe.jpg">
+<br>
+T-shirt Customization
+<br>
+<img src="Img/T.jpg">
+<br>
+
+
 ## Credit and References:
 
 Tutorial by JavaScript Mastery [YouTube](https://youtu.be/ZqEa8fTxypQ)<br>
