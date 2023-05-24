@@ -1,5 +1,10 @@
 # 3D Auction House website project using three.js and OpenAI DALL-E 2
 
+<img src="https://img.shields.io/badge/ThreeJS-%20-green">&nbsp;
+<img src="https://img.shields.io/badge/React-%20-green">&nbsp;
+<img src="https://img.shields.io/badge/TailWindCSS-%20-green">&nbsp;
+<img src="https://img.shields.io/badge/OpenAI DALL--E 2-%20-green">&nbsp;
+
 You can also see the demo in [DEMO](https://csw0126.github.io/auction_house_project/)
 <br>
 
