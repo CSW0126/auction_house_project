@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { css } from '@emotion/react';
-import { RingLoader } from 'react-spinners';
+import { FadeLoader  } from 'react-spinners';
 
 const override = css`
   display: block;
@@ -21,8 +21,8 @@ function Loading() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <RingLoader color={'#123abc'} loading={loading} css={override} size={150} />
-      {loading ? <p className="mt-5 text-lg font-bold">Loading...</p> : null}
+      <FadeLoader color="#36d7b7" />
+      {/* {loading ? <p className="mt-5 text-lg font-bold">Loading...</p> : null} */}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React,{lazy, Suspense} from 'react'
 import { Routes, Route, Navigate,useLocation   } from 'react-router-dom';
 import { RequireAuth } from 'react-auth-kit';
-import Home from "./pages/Home"
+// import Home from "./pages/Home"
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Loading from './components/Loading';
@@ -19,6 +19,7 @@ import {AnimatePresence } from 'framer-motion';
 const AnimatedRoute = () => {
     const location = useLocation();
     const Profile = lazy(() => import('./pages/Profile'));
+    const Home = lazy(() => import('./pages/Home'));
     return (
         <AnimatePresence>
             <Suspense fallback={<Loading/>}>
